@@ -13,7 +13,7 @@ import { PokemonCard } from '@/lib/presentation/components/PokemonCard'
 import { PokemonPagination } from '@/lib/presentation/components/PokemonPagination'
 import { SearchBar } from '@/lib/presentation/components/SearchBar'
 import { useDebounce } from '@/lib/hooks/useDebounce'
-import { PageTitle } from '../components/PageTittle'
+import { PageTitle } from '../components/PageTitle'
 
 export const HomePage = () => {
     const dispatch = useDispatch()
@@ -54,7 +54,7 @@ export const HomePage = () => {
                 {/* Title */}
                 <PageTitle name='Gaspar Israel Chay Colli' />
                 {/* Search */}
-                <div className='flex flex-wrap items-center justify-between gap-4 mb-6'>
+                <div className='flex flex-wrap items-center gap-4 mb-6'>
                     <SearchBar value={search} onChange={handleSearch} />
                 </div>
 

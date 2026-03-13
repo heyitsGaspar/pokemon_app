@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# 🎮 Pokémon App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una aplicación web responsiva para explorar y buscar Pokémon usando la [PokéAPI](https://pokeapi.co/). Construida con React, TypeScript, Redux Toolkit y Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Instalación y Ejecución
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Requisitos Previos
 
-## React Compiler
+- Node.js 18+
+- npm o yarn
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Pasos
 
-## Expanding the ESLint configuration
+1. **Clonar repositorio**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <url-del-repositorio>
+cd pokemon-app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Instalar dependencias**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm install
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. **Ejecutar en desarrollo**
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en: `http://localhost:5173`
+
+```
+
+
+
+## 📋 Características
+
+- ✅ **Visualización de Pokémon**: Muestra 6 Pokémon por página
+- ✅ **Paginación**: Navega fácilmente entre páginas de Pokémon
+- ✅ **Buscador**: Busca Pokémon por nombre en tiempo real (con debounce)
+- ✅ **Diseño Responsivo**: Funciona perfectamente en dispositivos móviles, tablets y escritorio
+- ✅ **Información Detallada**: Muestra tipos e imágenes oficiales
+- ✅ **Interfaz Moderna**: Diseño atractivo con animaciones y efectos hover
+- ✅ **Carga Inteligente**: Muestra skeletons mientras carga
+
+## 🛠️ Tecnologías Utilizadas
+
+| Tecnología    | Versión | Propósito                 |
+| ------------- | ------- | ------------------------- |
+| React         | 19.2.4  | Biblioteca UI             |
+| TypeScript    | ~5.9.3  | Tipado estático           |
+| Redux Toolkit | 2.11.2  | Gestión del estado global |
+| React Redux   | 9.2.0   | Integración React-Redux   |
+| Tailwind CSS  | 4.2.1   | Estilos responsivos       |
+| Vite          | 8.0.0   | Build tool y dev server   |
+| Axios         | 1.13.6  | Cliente HTTP              |
+| Lucide React  | 0.577.0 | Iconos                    |
+| ESLint        | 9.39.4  | Linting                   |
+
+## 📁 Estructura del Proyecto
+
+```
+
+src/
+├── lib/
+│ ├── app/
+│ │ └── store/
+│ │ └── store.ts # Configuración de Redux Store
+│ ├── application/
+│ │ └── usecases/
+│ │ ├── getPokemon.ts # Use case: obtener listado de Pokémon
+│ │ └── searchPokemon.ts # Use case: buscar Pokémon
+│ ├── domain/
+│ │ └── entities/
+│ │ └── pokemon.ts # Entidad Pokémon
+│ ├── hooks/
+│ │ └── useDebounce.ts # Hook personalizado de debounce
+│ ├── infrastructure/
+│ │ └── api/
+│ │ └── pokemonApi.ts # Configuración de cliente Axios para PokéAPI
+│ ├── presentation/
+│ │ ├── components/
+│ │ │ ├── PageTitle.tsx # Título principal con animación
+│ │ │ ├── PokemonCard.tsx # Tarjeta de Pokémon
+│ │ │ ├── PokemonPagination.tsx # Controles de paginación
+│ │ │ ├── PokemonSkeleton.tsx # Skeleton loader
+│ │ │ └── SearchBar.tsx # Buscador
+│ │ ├── pages/
+│ │ │ └── HomePage.tsx # Página principal
+│ │ └── store/
+│ │ └── pokemonSlice.ts # Redux slice para Pokémon
+│ ├── typeStyles.ts # Estilos por tipo de Pokémon
+│ └── utils.ts # Utilidades generales
+├── components/
+│ └── ui/ # Componentes UI reutilizables (shadcn)
+├── App.tsx # Componente raíz
+├── index.css # Estilos globales
+└── main.tsx # Punto de entrada
+
+```
+
+## 🏗️ Arquitectura y Patrones
+
+### Arquitectura Hexagonal (Clean Code)
+
+El proyecto sigue principios de arquitectura hexagonal dividiendo el código en capas:
+
+1. **Domain**: Entidades y lógica de negocio pura
+2. **Application**: Use cases que coordinan el flujo de negocio
+3. **Infrastructure**: Conexión con APIs externas
+4. **Presentation**: Componentes React y UI
+
+## 👤 Autor
+
+**Gaspar Israel Chay Colli**
+
+---
+
+**Última actualización**: Marzo 2026
 ```
