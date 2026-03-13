@@ -8,6 +8,7 @@ import { PokemonSkeleton } from "@/lib/presentation/components/PokemonSkeleton";
 import { PokemonCard } from "@/lib/presentation/components/PokemonCard";
 import { PokemonPagination } from "@/lib/presentation/components/PokemonPagination";
 import { SearchBar } from "@/lib/presentation/components/SearchBar";
+import { useDebounce } from "@/lib/hooks/useDebounce";
 
 
 export const HomePage = () => {
@@ -19,19 +20,14 @@ export const HomePage = () => {
     );
 
     const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search, 500);
 
     const handleSearch = (value: string) => {
 
         setSearch(value);
 
-        if (value.trim() === "") {
-            dispatch(fetchPokemons({ page: 1 }) as any);
-            return;
-        }
-
-        dispatch(searchLocalPokemon(value));
     };
-
+    //cargar pokemones iniciales 
     useEffect(() => {
 
         dispatch(fetchPokemons({ page: 1 }) as any);
@@ -42,11 +38,17 @@ export const HomePage = () => {
 
     useEffect(() => {
 
-        if (search === "") {
-            dispatch(fetchPokemons({ page }) as any);
+        if (debouncedSearch.trim() === "") {
+
+            dispatch(fetchPokemons({ page: 1 }) as any)
+
+        } else {
+
+            dispatch(searchLocalPokemon(debouncedSearch))
+
         }
 
-    }, [dispatch, page, search]);
+    }, [debouncedSearch, dispatch])
 
     const handlePageChange = (newPage: number) => {
 
@@ -56,14 +58,14 @@ export const HomePage = () => {
 
     return (
 
-        <div className="container mx-auto p-6">
+        <div className="container p-6 mx-auto">
 
-            <h1 className="text-4xl font-bold mb-6 text-center">
+            <h1 className="mb-6 text-4xl font-bold text-center">
                 Pokedex
             </h1>
 
             {/* Search */}
-            <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
 
                 <SearchBar
                     value={search}
@@ -73,7 +75,7 @@ export const HomePage = () => {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
 
                 {loading
                     ? Array.from({ length: 6 }).map((_, i) => (
